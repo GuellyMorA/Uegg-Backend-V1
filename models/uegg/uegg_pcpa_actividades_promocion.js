@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
            autoIncrement: true,
            field: 'id'
        },
+       id_pcpa_construccion: DataTypes.INTEGER,
        id_pcpa_actividades_tipo: DataTypes.INTEGER,
             
        nivel: DataTypes.INTEGER, // 1: maestro  , 2: detalle	
