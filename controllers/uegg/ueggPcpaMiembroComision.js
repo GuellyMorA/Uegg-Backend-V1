@@ -13,19 +13,19 @@ module.exports = {
     async listMiembrosComision(req, res) {
       console.log('req', req.params);
       let ie_tipo = null; //await GeneralService.getInstitucioneducativaTipo();
-      return sequelize.query(`select upue.id as id_pcpa_unidad_educativa,  upue.cod_sie,upue.desc_ue, upue.desc_municipio , 
+      return sequelize.query(`select  upue.id as id_pcpa_unidad_educativa,  upue.cod_sie,upue.desc_ue, upue.desc_municipio , 
       upue.desc_municipio  , upue.desc_nivel , upue.modalidad  , upue.nombres_director ||'-'|| upue.apellidos_director as nombres_director
       , upcon.id, upcon.fecha_registro  , upcon.check_diagnostico_pcpa 
       , upct.id as id_comision_tipo, upct.desc_comision_tipo 
       , upmt.id as id_miembro_tipo, upmt.desc_miembro_tipo
-      , upmc.id as id_miembro, upmc.nombres_miembro || ' ' || upmc.apellidos_miembro  as nombres_miembro
+      , upmc.id as id_miembro, upmc.nombres_miembro as nombres_miembro
         from uegg_pcpa_construccion upcon 
           join uegg_pcpa_unidad_educativa upue   on upcon.id_pcpa_unidad_educativa = upue.id 
           join uegg_pcpa_miembro_comision upmc  on upmc.id_pcpa_construccion = upcon.id
           join uegg_pcpa_miembro_tipo upmt      on upmt.id = upmc.id_pcpa_miembro_tipo 
           join uegg_pcpa_comision_tipo upct     on upct.id = upmc.id_pcpa_comision_tipo      
-        WHERE upue.cod_ue = ${req.params.id} `, {
-          type: sequelize.QueryTypes.SELECT, plain: false, raw: true 
+        WHERE upue.cod_ue = ${req.params.id} and upue.estado = 'ACTIVO' and upmc.estado = 'ACTIVO'  order by id_pcpa_comision_tipo ASC,  id_miembro_tipo ASC`, {
+          type: sequelize.QueryTypes.SELECT, plain: false, raw: true //  ||  ' ' || upmc.apellidos_miembro 
         })
           .then((subcentros) => res.status(200).send(subcentros))
           .catch((error) => { res.status(400).send(error); });
@@ -88,8 +88,8 @@ module.exports = {
                 check_miembro_comision: req.body.check_miembro_comision || ueggPcpaMiembroComision.check_miembro_comision,
                 
                 estado: 'MODIFICADO',  
-                usu_mod: req.body.usu_mod ,
-                fec_mod: req.body.fec_mod
+                usu_mod: 'ADMIN', //req.body.usu_mod ,
+                fec_mod:  new Date() //req.body.fec_mod
               })
               .then(() =>{  
                  console.log(' *************SI UPDATE OK');
@@ -102,7 +102,39 @@ module.exports = {
             console.log(' *************ERROR UPDATE 2',  error);
             res.status(400).send(error)  });
       },
-    
+  
+      deleteLogico(req, res) { // en el front se llama    deleteMiembroComision
+        console.log('comision : req.params.id: ',req.params.id );
+     
+  
+        return UeggPcpaMiembroComision.findByPk(req.params.id, {})
+            .then(ueggPcpaMiembroComision => {
+              if (!ueggPcpaMiembroComision) {
+                return res.status(404).send({
+                  message: "ueggPcpaConstruccion Not Found"
+                });
+              }
+              return ueggPcpaMiembroComision
+                .update({
+                 
+                  estado: 'INACTIVO',  
+                  usu_mod: 'ADMIN', //req.body.usu_mod ,
+                  fec_mod:  new Date() //req.body.fec_mod
+                })
+                .then(() =>{  
+                   console.log(' *************SI INACTIVADO OK');
+                   res.status(204).send(ueggPcpaMiembroComision)   })
+                .catch(error => {
+                  console.log(' *************ERROR INACTIVADO 1', error);
+                  res.status(400).send(error)  });
+            })
+            .catch(error => {
+              console.log(' *************ERROR INACTIVADO 2',  error);
+              res.status(400).send(error)  });
+      },   
+
+
+
       delete(req, res) {
         return UeggPcpaMiembroComision.findByPk(req.params.Id)
           .then(ueggPcpaMiembroComision => {

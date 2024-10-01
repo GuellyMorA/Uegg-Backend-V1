@@ -83,8 +83,8 @@ module.exports = {
                 longitud: req.body.longitud || ueggPcpaUnidadEducativa.longitud,
                 
                 estado: 'MODIFICADO',  
-                usu_mod: req.body.usu_mod ,
-                fec_mod: req.body.fec_mod
+                usu_mod: 'ADMIN', //req.body.usu_mod ,
+                fec_mod:  new Date() //req.body.fec_mod
               })
               .then(() =>{  
                  console.log(' *************SI UPDATE OK');

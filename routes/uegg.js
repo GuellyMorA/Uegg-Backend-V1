@@ -34,6 +34,9 @@ const ueggPcpaActividadesTipoController    =  require('../controllers/uegg/ueggP
 const ueggPcpaActividadesTipoDetController    =  require('../controllers/uegg/ueggPcpaActividadesTipoDet');
 const ueggPcpaComisionTipoController    =  require('../controllers/uegg/ueggPcpaComisionTipo');
 const ueggPcpaConstruccionController    =  require('../controllers/uegg/ueggPcpaConstruccion');
+const ueggPcpaConstruccionDelController    =  require('../controllers/uegg/ueggPcpaConstruccion');
+const ueggPcpaMiembroComisionDelController    =  require('../controllers/uegg/ueggPcpaMiembroComision');
+
 const ueggPcpaIndicadoresEjecucionController    =  require('../controllers/uegg/ueggPcpaIndicadoresEjecucion');
 const ueggPcpaIndicadoresTipoController    =  require('../controllers/uegg/ueggPcpaIndicadoresTipo');
 const ueggPcpaMiembroComisionController    =  require('../controllers/uegg/ueggPcpaMiembroComision');
@@ -253,6 +256,11 @@ router.put('/ueggPcpaActividadesTipo/:id',               ueggPcpaActividadesTipo
 router.put('/ueggPcpaActividadesTipoDet/:id',            ueggPcpaActividadesTipoDetController.update);                                                                        
 router.put('/ueggPcpaComisionTipo/:id',                  ueggPcpaComisionTipoController.update);                                                                        
 router.put('/ueggPcpaConstruccion/:id',                  ueggPcpaConstruccionController.update);                                                                        
+router.put('/ueggPcpaConstruccionDel/:id',               ueggPcpaConstruccionDelController.deleteLogico); 
+router.put('/ueggPcpaMiembroComisionDel/:id',            ueggPcpaMiembroComisionDelController.deleteLogico); 
+
+
+
 router.put('/ueggPcpaIndicadoresEjecucion/:id',          ueggPcpaIndicadoresEjecucionController.update);                                                                        
 router.put('/ueggPcpaIndicadoresTipo/:id',               ueggPcpaIndicadoresTipoController.update);                                                                        
 router.put('/ueggPcpaMiembroComision/:id',               ueggPcpaMiembroComisionController.update);                                                                        

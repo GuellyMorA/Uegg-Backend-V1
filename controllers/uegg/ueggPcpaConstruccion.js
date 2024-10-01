@@ -32,7 +32,8 @@ module.exports = {
 
             fecha_registro: req.body.fecha_registro   ,    
             check_diagnostico_pcpa: req.body.check_diagnostico_pcpa ,
-		  
+            fecha_aprobacion: req.body.fecha_aprobacion, // new Date(   dateToString (req.body.fecha_aprobacion,'tz',''))  , //   new Date(  req.body.fecha_aprobacion.toLocaleDateString() )
+            vigencia_aprobacion:  req.body.vigencia_aprobacion   ,
             estado: 'ACTIVO' ,
             usu_cre: req.body.usu_cre ,
             fec_cre: req.body.fec_cre 
@@ -41,21 +42,22 @@ module.exports = {
           .then(ueggPcpaConstruccion => res.status(201).send(ueggPcpaConstruccion))
           .catch(error => res.status(400).send(error));
       },
-
-    // add(req, res) {
-    //     return UeggPcpaConstruccion.create({
-    //       idPcpaUnidadEductiva: req.body.id_pcpa_unidad_eductiva ,
-    //       fechaRegistro: req.body.fecha_registro   ,    
-    //       checkDiagnosticoPcpa: req.body.check_diagnostico_pcpa ,		  
-    //       estado: 'ACTIVO' ,
-    //       usuCre: req.body.usu_cre ,
-    //       fecCre: req.body.fec_cre 
-        
-    //     })
-    //       .then(ueggPcpaConstruccion => res.status(201).send(ueggPcpaConstruccion))
-    //       .catch(error => res.status(400).send(error));
-    // },
-    
+/*
+      dateToString (date, timeZone, dialect) {
+        if (moment.tz.zone(timeZone)) {
+          date = moment(date).tz(timeZone);
+        } else {
+          date = moment(date).utcOffset(timeZone);
+        }
+      
+        if (dialect === 'mysql' || dialect === 'mariadb') {
+          return date.format('YYYY-MM-DD HH:mm:ss');
+        } else {
+          // ZZ here means current timezone, _not_ UTC
+          return date.format('YYYY-MM-DD HH:mm:ss.SSS Z'); /// <-- Executed for MSSQL - includes offset
+        }
+      },
+    */
     update(req, res) {
         console.log(UeggPcpaConstruccion);
         return UeggPcpaConstruccion.findByPk(req.params.Id, {})
@@ -65,15 +67,15 @@ module.exports = {
                 message: "ueggPcpaConstruccion Not Found"
               });
             }
-            return ueggPcpaConstruccion
+        return ueggPcpaConstruccion
               .update({
                 id_pcpa_unidad_educativa: req.body.id_pcpa_unidad_educativa ||  ueggPcpaConstruccion.id_pcpa_unidad_educativa  ,
                 fecha_registro: req.body.fecha_registro  ||  ueggPcpaConstruccion.fecha_registro  ,
                 check_diagnostico_pcpa: req.body.check_diagnostico_pcpa  ||  ueggPcpaConstruccion.check_diagnostico_pcpa  ,
-		   
+                fecha_aprobacion: req.body.fecha_aprobacion  ||  ueggPcpaConstruccion.fecha_aprobacion  ,
                 estado: 'MODIFICADO',  
-                usu_mod: req.body.usu_mod ,
-                fec_mod: req.body.fec_mod
+                usu_mod: 'ADMIN', //req.body.usu_mod ,
+                fec_mod:  new Date() //req.body.fec_mod
               })
               .then(() =>{  
                  console.log(' *************SI UPDATE OK');
@@ -87,6 +89,42 @@ module.exports = {
             res.status(400).send(error)  });
       },
     
+  deleteLogico(req, res) { // en el front se llama    deleteMiembroComision
+      console.log('id: req.params.id: ',req.params.id );
+    sequelize.query(`UPDATE uegg_pcpa_construccion  set estado ='INACTIVO' , usu_mod ='ADMIN' WHERE  id = ${req.params.id} `, {
+          type: sequelize.QueryTypes.SELECT, plain: true, raw: true  //, fec_mod= ${new Date("YYYY-MM-DD")}  
+    })
+    .then((subcentros) => {
+
+
+      sequelize.query('select upcon.id_pcpa_unidad_educativa as id from   uegg_pcpa_construccion upcon  where  id = :id', {
+                      replacements: { id: req.params.id },
+                      type: sequelize.QueryTypes.SELECT
+       })
+        .then((id) => {
+         // query ='  UPDATE uegg_pcpa_unidad_educativa  set estado ="INACTIVO" where  id  ='+  pcpa_unidad_educativa.id ;
+            const id_pcpa_unidad_educativa = id[0].id; // new Number(id[0].id);
+              return  sequelize.query("UPDATE uegg_pcpa_unidad_educativa  set estado ='INACTIVO' , usu_mod ='ADMIN', fec_mod= :fec  WHERE  id  = :id", {
+              replacements: { id: id_pcpa_unidad_educativa  ,  fec: new Date()},  //  
+              type: sequelize.QueryTypes.SELECT
+            }).then(()=>{
+                console.log(' *************SI UPDATE OK');
+                res.status(204).send({
+                  message: "ueggPcpaConstruccion INACTIVADO: " + id_pcpa_unidad_educativa
+                });
+              } )
+            })
+            .catch(error => {
+                    console.log(' *************ERROR INACTIVADO 1', error);
+                    res.status(400).send(error) ; 
+            })
+      }).catch(error => { 
+             res.status(400).send(error); 
+        }  )
+      
+
+  },
+
     delete(req, res) {
         return UeggPcpaConstruccion.findByPk(req.params.Id)
           .then(ueggPcpaConstruccion => {

@@ -1553,3 +1553,5 @@ INSERT INTO "usuario_rol" ("id", "rol_tipo_id", "usuario_id", "esactivo", "lugar
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+ALTER TABLE public.uegg_pcpa_construccion ADD fecha_aprobacion timestamp NULL;
+ALTER TABLE public.uegg_pcpa_construccion ADD vigencia_aprobacion int4 NULL;

@@ -24,6 +24,19 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         field: 'check_diagnostico_pcpa'
         },
+        
+        fecha_aprobacion : {
+            type: DataTypes.DATE,
+            allowNull: true,
+            field: 'fecha_aprobacion'
+        }, 
+        
+        vigencia_aprobacion : {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            field: 'vigencia_aprobacion'
+        },
+        
         estado: {
         type: DataTypes.STRING,
         allowNull: true,
