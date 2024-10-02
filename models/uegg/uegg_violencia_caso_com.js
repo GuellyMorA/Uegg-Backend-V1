@@ -1,3 +1,4 @@
+
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const UeggViolenciaCasoCom = sequelize.define('uegg_violencia_caso_com', {
@@ -9,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       field: 'id'
   },
     id_violencia_caso_agresor: DataTypes.INTEGER,
+    id_violencia_victima: DataTypes.INTEGER, //modificado
+    id_violencia_agresor: DataTypes.INTEGER, //modificado
     comunicacion_tutores: DataTypes.BOOLEAN,
     desc_hecho: DataTypes.STRING,
     nombre_tutores: DataTypes.STRING,

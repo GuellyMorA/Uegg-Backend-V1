@@ -1555,3 +1555,15 @@ INSERT INTO "usuario_rol" ("id", "rol_tipo_id", "usuario_id", "esactivo", "lugar
 /*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
 ALTER TABLE public.uegg_pcpa_construccion ADD fecha_aprobacion timestamp NULL;
 ALTER TABLE public.uegg_pcpa_construccion ADD vigencia_aprobacion int4 NULL;
+
+
+-- Cambios Roly violencia
+
+ALTER TABLE public.uegg_violencia_victima ALTER COLUMN uegg_violencia_caso_agresor_id DROP NOT NULL;
+
+
+ALTER TABLE public.uegg_violencia_caso_agresor ALTER COLUMN num_caso TYPE varchar(15) USING num_caso::varchar(15);
+ALTER TABLE public.uegg_violencia_caso_agresor ALTER COLUMN num_caso SET NOT NULL;
+
+ALTER TABLE public.uegg_violencia_caso_com ADD id_violencia_victima int4 NULL;
+ALTER TABLE public.uegg_violencia_caso_com ADD id_violencia_agresor int4 NULL;
