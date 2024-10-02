@@ -32,6 +32,7 @@ module.exports = {
             id_violencia_victima: req.body.id_violencia_victima,
             id_violencia_agresor_nombre: req.body.id_violencia_agresor_nombre,
             id_violencia_hecho_tipo: req.body.id_violencia_hecho_tipo,
+            id_violencia_instancia: req.body.id_violencia_instancia, // MODIFICADO 20241001
             desc_hecho: req.body.desc_hecho,
             recepcion_ficha: req.body.recepcion_ficha,
             estado: 'ACTIVO' ,

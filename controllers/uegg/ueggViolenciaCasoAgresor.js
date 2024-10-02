@@ -1,4 +1,5 @@
 const UeggViolenciaCasoAgresor = require('../../models/uegg').uegg_violencia_caso_agresor ; 
+const sequelize = UeggViolenciaCasoAgresor.sequelize; // MODIFICADO 20241001
 
 module.exports = {
     list(req, res) {
@@ -88,6 +89,15 @@ module.exports = {
           .catch(error => res.status(400).send(error));
       },
     
+      // getByCaso(req, res) {
+      //   console.log('req', req.params, `select * from public.uegg_violencia_caso_agresor where num_caso = '${req.params.numero}' `);
+      //   return sequelize.query(`select * from public.uegg_violencia_caso_agresor where num_caso = '${req.params.numero}' `, {
+      //       type: sequelize.QueryTypes.SELECT, plain: false, raw: true 
+      //     })
+      //       .then((subcentros) => res.status(200).send(subcentros))
+      //       .catch((error) => { res.status(400).send(error); });
+      // },
+    
       getByCaso(req, res) {
         console.log('req', req.params, `select * from public.uegg_violencia_caso_agresor where num_caso = '${req.params.numero}' `);
         return sequelize.query(`select * from public.uegg_violencia_caso_agresor where num_caso = '${req.params.numero}' `, {
@@ -96,6 +106,65 @@ module.exports = {
             .then((subcentros) => res.status(200).send(subcentros))
             .catch((error) => { res.status(400).send(error); });
       },
+
+      // MODIFICADO 20241001
+      getByCasoDetalle(req, res) {
+        console.log('req', req.params, `select * from public.uegg_violencia_caso_agresor where num_caso = '${req.params.numero}' `);
+        return sequelize.query(`
+          select uvca.id as caso_id, uvv.id as victima_id, uvca.num_caso, uvca.fec_agresion, uvv.id as id_victima, uva.id as id_agresor, uvcc.desc_hecho, case when uvcc.violencia_psico then 2 when uvcc.violencia_sexual then 3 else 0 end as id_violencia_tipo
+          , uvv.cod_rude, uvv.num_ci, uvv.num_comp as comp_victima, uvv.nombres_victima, uvv.apellido_pat_victima, uvv.apellido_mat_victima, date_part('year',age(uvv.fec_nac)) as edad_victima, uvv.sexo as sexo_victima
+          , uva.cod_rda, uva.apellido_pat_agresor, uva.apellido_mat_agresor, uva.nombres_agresor, uva.sexo as sexo_agresor, uva.num_ci as ci_agresor, uva.num_comp as comp_agresor, date_part('year',age(uva.fec_nac)) as edad_agresor
+          , uvss.id as id_seguimiento_sancion
+          from uegg_violencia_caso_agresor uvca 
+          inner join uegg_violencia_caso_com uvcc on uvcc.id_violencia_caso_agresor = uvca.id
+          inner join uegg_violencia_victima uvv on uvcc.id_violencia_victima = uvv.id 
+          inner join uegg_violencia_agresor uva on uvcc.id_violencia_agresor = uva.id
+          left join uegg_violencia_seg_sanciones uvss on uvss.id_num_caso = uvca.id
+          where uvca.num_caso = '${req.params.numero}'
+        `, {
+            type: sequelize.QueryTypes.SELECT, plain: false, raw: true 
+          })
+            .then((subcentros) => res.status(200).send(subcentros))
+            .catch((error) => { res.status(400).send(error); });
+      },
+
+      // MODIFICADO 20241001
+      getByRude(req, res) {
+        console.log('req', req.params, `select uvca.id as caso_id, uvv.id as victima_id, uvca.num_caso, uvca.fec_agresion, uvv.cod_rude, uvv.num_ci, uvv.nombres_victima, uvv.apellido_pat_victima, uvv.apellido_mat_victima, uvv.fec_nac from uegg_violencia_caso_agresor uvca inner join uegg_violencia_victima uvv on uvv.uegg_violencia_caso_agresor_id = uvca.id where uvv.cod_rude = '${req.params.rude}'`);
+        return sequelize.query(`
+            select uvca.id as caso_id, uvv.id as victima_id, uvca.num_caso, uvca.fec_agresion, uvv.id as id_victima, uva.id as id_agresor, uvcc.desc_hecho, case when uvcc.violencia_psico then 2 when uvcc.violencia_sexual then 3 else 0 end as id_violencia_tipo
+            , uvv.cod_rude, uvv.num_ci, uvv.num_comp as comp_victima, uvv.nombres_victima, uvv.apellido_pat_victima, uvv.apellido_mat_victima, date_part('year',age(uvv.fec_nac)) as edad_victima, uvv.sexo as sexo_victima
+            , uva.cod_rda, uva.apellido_pat_agresor, uva.apellido_mat_agresor, uva.nombres_agresor, uva.sexo as sexo_agresor, uva.num_ci as ci_agresor, uva.num_comp as comp_agresor, date_part('year',age(uva.fec_nac)) as edad_agresor
+            from uegg_violencia_caso_agresor uvca 
+            inner join uegg_violencia_caso_com uvcc on uvcc.id_violencia_caso_agresor = uvca.id
+            inner join uegg_violencia_victima uvv on uvcc.id_violencia_victima = uvv.id 
+            inner join uegg_violencia_agresor uva on uvcc.id_violencia_agresor = uva.id
+            where uvv.cod_rude = '${req.params.rude}'
+          `, {
+            type: sequelize.QueryTypes.SELECT, plain: false, raw: true 
+          })
+            .then((subcentros) => res.status(200).send(subcentros))
+            .catch((error) => { res.status(400).send(error); });
+      },
+    
+      // MODIFICADO 20241001
+      getByRda(req, res) {
+        console.log('req', req.params, `select uvca.id as caso_id, uvv.id as victima_id, uvca.num_caso, uvca.fec_agresion, uvv.cod_rude, uvv.num_ci, uvv.nombres_victima, uvv.apellido_pat_victima, uvv.apellido_mat_victima, uvv.fec_nac from uegg_violencia_caso_agresor uvca inner join uegg_violencia_victima uvv on uvv.uegg_violencia_caso_agresor_id = uvca.id where uvv.cod_rude = '${req.params.rda}'`);
+        return sequelize.query(`
+              select uvca.id as caso_id, uvv.id as victima_id, uvca.num_caso, uvca.fec_agresion, uvv.id as id_victima, uva.id as id_agresor, uvcc.desc_hecho, case when uvcc.violencia_psico then 2 when uvcc.violencia_sexual then 3 else 0 end as id_violencia_tipo
+              , uvv.cod_rude, uvv.num_ci, uvv.num_comp as comp_victima, uvv.nombres_victima, uvv.apellido_pat_victima, uvv.apellido_mat_victima, date_part('year',age(uvv.fec_nac)) as edad_victima, uvv.sexo as sexo_victima
+              , uva.cod_rda, uva.apellido_pat_agresor, uva.apellido_mat_agresor, uva.nombres_agresor, uva.sexo as sexo_agresor, uva.num_ci as ci_agresor, uva.num_comp as comp_agresor, date_part('year',age(uva.fec_nac)) as edad_agresor
+              from uegg_violencia_caso_agresor uvca 
+              inner join uegg_violencia_caso_com uvcc on uvcc.id_violencia_caso_agresor = uvca.id
+              inner join uegg_violencia_victima uvv on uvcc.id_violencia_victima = uvv.id 
+              inner join uegg_violencia_agresor uva on uvcc.id_violencia_agresor = uva.id
+              where uva.cod_rda = ${req.params.rda}
+            `, {
+            type: sequelize.QueryTypes.SELECT, plain: false, raw: true 
+          })
+            .then((subcentros) => res.status(200).send(subcentros))
+            .catch((error) => { res.status(400).send(error); });
+      }
 
 
 

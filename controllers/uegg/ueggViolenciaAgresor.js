@@ -1,4 +1,5 @@
 const UeggViolenciaAgresor = require('../../models/uegg').uegg_violencia_agresor ; 
+const sequelize = UeggViolenciaAgresor.sequelize; // MODIFICADO 20241001
 
 module.exports = {
     list(req, res) {
