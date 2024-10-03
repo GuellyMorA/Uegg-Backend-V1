@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     id_violencia_victima: DataTypes.INTEGER,
     id_violencia_agresor_nombre: DataTypes.INTEGER,
     id_violencia_hecho_tipo: DataTypes.INTEGER,
+    id_violencia_instancia: DataTypes.INTEGER, // MODIFICADO 20241001
     desc_hecho: DataTypes.STRING,
     recepcion_ficha: DataTypes.BOOLEAN,
   

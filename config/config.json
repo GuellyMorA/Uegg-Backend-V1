@@ -2,8 +2,8 @@
 
     "development": {
         "username": "postgres",
-        "password": "123",
-        "database": "uegg",
+        "password": "12345678",
+        "database": "pub",
         "host": "localhost",
         "port": "5432",
         "dialect": "postgres"

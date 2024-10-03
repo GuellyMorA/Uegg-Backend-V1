@@ -132,7 +132,12 @@ router.get('/ueggViolenciaAgresor',                  ueggViolenciaAgresorControl
 router.get('/ueggViolenciaAutoFinalTipo',            ueggViolenciaAutoFinalTipoController.list);                                                                        
 router.get('/ueggViolenciaAutoInicialTipo',          ueggViolenciaAutoInicialTipoController.list);                                                                        
 router.get('/ueggViolenciaCasoAgresor',              ueggViolenciaCasoAgresorController.list);                                                                         
-router.get('/ueggViolenciaCasoAgresor/caso/:numero', ueggViolenciaCasoAgresorController.getByCaso);                                                                         
+router.get('/ueggViolenciaCasoAgresor/caso/:numero', ueggViolenciaCasoAgresorController.getByCaso);            // MODIFICADO 20241001                                                             
+router.get('/ueggViolenciaCasoAgresor/caso/:numero', ueggViolenciaCasoAgresorController.getByCaso);                       // MODIFICADO 20241001                                         
+router.get('/ueggViolenciaCasoAgresor/caso/detalle/:numero', ueggViolenciaCasoAgresorController.getByCasoDetalle);              // MODIFICADO 20241001                                                          
+router.get('/ueggViolenciaCasoAgresor/rude/:rude',   ueggViolenciaCasoAgresorController.getByRude);                // MODIFICADO 20241001                                                   
+router.get('/ueggViolenciaCasoAgresor/rda/:rda',     ueggViolenciaCasoAgresorController.getByRda);                 // MODIFICADO 20241001                                                       
+  
 router.get('/ueggViolenciaCasoCom',                  ueggViolenciaCasoComController.list);                                                                        
 router.get('/ueggViolenciaCasoDna',                  ueggViolenciaCasoDnaController.list);                                                                        
 router.get('/ueggViolenciaComDist',                  ueggViolenciaComDistController.list);                                                                        

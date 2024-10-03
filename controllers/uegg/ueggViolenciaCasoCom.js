@@ -23,7 +23,7 @@ module.exports = {
             })
             .catch((error) => res.status(400).send(error));
     },
-
+/*
     add(req, res) {
         return UeggViolenciaCasoCom.create({
             id_violencia_caso_agresor: req.body.id_violencia_caso_agresor,
@@ -50,6 +50,39 @@ module.exports = {
           .then(UeggViolenciaCasoCom => res.status(201).send(UeggViolenciaCasoCom))
           .catch(error => res.status(400).send(error));
       },
+
+*/
+
+add(req, res) {
+  return UeggViolenciaCasoCom.create({
+      id_violencia_caso_agresor: req.body.id_violencia_caso_agresor,
+
+      id_violencia_victima: req.body.id_violencia_victima, // modificado
+      id_violencia_agresor: req.body.id_violencia_agresor, // modificado
+
+      comunicacion_tutores: req.body.comunicacion_tutores,
+      desc_hecho: req.body.desc_hecho,
+
+      nombre_tutores: req.body.nombre_tutores,
+      fec_com: req.body.fec_com,
+      violencia_fis: req.body.violencia_fis,
+      violencia_val_fis: req.body.violencia_val_fis,
+      desc_hecho_fis: req.body.desc_hecho_fis,
+      violencia_psico: req.body.violencia_psico,
+      violencia_val_psico: req.body.violencia_val_psico,
+      desc_hecho_psico: req.body.desc_hecho_psico,
+      violencia_sexual: req.body.violencia_sexual,
+      violencia_val_sexual: req.body.violencia_val_sexual,
+      desc_hecho_sexual: req.body.desc_hecho_sexual,
+
+      estado: 'ACTIVO' ,
+      usu_cre: req.body.usu_cre ,
+      fec_cre: req.body.fec_cre 
+  })
+    .then(UeggViolenciaCasoCom => res.status(201).send(UeggViolenciaCasoCom))
+    .catch(error => res.status(400).send(error));
+},
+
 
 
       update(req, res) {

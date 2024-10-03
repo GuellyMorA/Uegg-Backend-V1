@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     cod_sie: DataTypes.INTEGER,
     cod_rda_director: DataTypes.INTEGER,
     cod_director: DataTypes.INTEGER,
-    cod_rude: DataTypes.INTEGER,
+    cod_rude: DataTypes.STRING,
     num_ci: DataTypes.INTEGER,
     num_comp: DataTypes.STRING,
     nombres_victima: DataTypes.STRING,
