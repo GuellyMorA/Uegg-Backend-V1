@@ -14,17 +14,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         field: 'id_pcpa_unidad_educativa'
         },
-        fechaRegistro : {
-        type: DataTypes.DATE,
-        allowNull: true,
-        field: 'fecha_registro'
+        fecha_registro : {
+            type: DataTypes.DATE,
+            allowNull: true,
+            field: 'fecha_registro'
         },
         check_diagnostico_pcpa : {
         type: DataTypes.BOOLEAN,
         allowNull: true,
         field: 'check_diagnostico_pcpa'
         },
-        
         fecha_aprobacion : {
             type: DataTypes.DATE,
             allowNull: true,

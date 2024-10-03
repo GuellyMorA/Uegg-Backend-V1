@@ -30,16 +30,20 @@ const ueggEmbReporteEmbarazoTipoController    =  require('../controllers/uegg/ue
 const ueggPcpaAcccionesEjecucionController    =  require('../controllers/uegg/ueggPcpaAcccionesEjecucion');
 const ueggPcpaActividadesEjecutadasController    =  require('../controllers/uegg/ueggPcpaActividadesEjecutadas');
 const ueggPcpaActividadesPromocionController    =  require('../controllers/uegg/ueggPcpaActividadesPromocion');
+const ueggPcpaActividadesPromocionDelController    =  require('../controllers/uegg/ueggPcpaActividadesPromocion');
+
 const ueggPcpaActividadesTipoController    =  require('../controllers/uegg/ueggPcpaActividadesTipo');
 const ueggPcpaActividadesTipoDetController    =  require('../controllers/uegg/ueggPcpaActividadesTipoDet');
 const ueggPcpaComisionTipoController    =  require('../controllers/uegg/ueggPcpaComisionTipo');
 const ueggPcpaConstruccionController    =  require('../controllers/uegg/ueggPcpaConstruccion');
 const ueggPcpaConstruccionDelController    =  require('../controllers/uegg/ueggPcpaConstruccion');
-const ueggPcpaMiembroComisionDelController    =  require('../controllers/uegg/ueggPcpaMiembroComision');
+
 
 const ueggPcpaIndicadoresEjecucionController    =  require('../controllers/uegg/ueggPcpaIndicadoresEjecucion');
 const ueggPcpaIndicadoresTipoController    =  require('../controllers/uegg/ueggPcpaIndicadoresTipo');
 const ueggPcpaMiembroComisionController    =  require('../controllers/uegg/ueggPcpaMiembroComision');
+const ueggPcpaMiembroComisionDelController    =  require('../controllers/uegg/ueggPcpaMiembroComision');
+
 const ueggPcpaMiembroTipoController    =  require('../controllers/uegg/ueggPcpaMiembroTipo');
 const ueggPcpaReporteEmbarazoTipoController    =  require('../controllers/uegg/ueggPcpaReporteEmbarazoTipo');
 const ueggPcpaUnidadEducativaController    =  require('../controllers/uegg/ueggPcpaUnidadEducativa');
@@ -100,24 +104,29 @@ router.get('/ueggEmbEstudianteDerechos',             ueggEmbEstudianteDerechosCo
 router.get('/ueggEmbEstudianteDerechosSeg',          ueggEmbEstudianteDerechosSegController.list);                                                                        
 router.get('/ueggEmbEstudianteEmbarazo',             ueggEmbEstudianteEmbarazoController.list);                                                                        
 router.get('/ueggEmbInformeEmbarazo',                ueggEmbInformeEmbarazoController.list);                                                                        
-router.get('/ueggEmbReporteEmbarazoTipo',            ueggEmbReporteEmbarazoTipoController.list);                                                                        
+router.get('/ueggEmbReporteEmbarazoTipo',            ueggEmbReporteEmbarazoTipoController.list);    
+
 router.get('/ueggPcpaAcccionesEjecucion',            ueggPcpaAcccionesEjecucionController.list);                                                                        
 router.get('/ueggPcpaActividadesEjecutadas',         ueggPcpaActividadesEjecutadasController.list);                                                                        
-router.get('/ueggPcpaActividadesPromocion',          ueggPcpaActividadesPromocionController.list);                                                                        
+router.get('/ueggPcpaActividadesPromocion',          ueggPcpaActividadesPromocionController.list);
+router.get('/ueggPcpaActividadesPromocionList/:id',  ueggPcpaActividadesPromocionController.listActividadesPromocion);   
+
 router.get('/ueggPcpaActividadesTipo',               ueggPcpaActividadesTipoController.list);                                                                        
 router.get('/ueggPcpaActividadesTipoDet',            ueggPcpaActividadesTipoDetController.list);                                                                        
 router.get('/ueggPcpaComisionTipo',                  ueggPcpaComisionTipoController.list);                                                                        
-router.get('/ueggPcpaConstruccion',                  ueggPcpaConstruccionController.list);                                                                        
-router.get('/ueggPcpaIndicadoresEjecucion',          ueggPcpaIndicadoresEjecucionController.list);                                                                        
-router.get('/ueggPcpaIndicadoresTipo',               ueggPcpaIndicadoresTipoController.list);                                                                        
-router.get('/ueggPcpaMiembroComision',               ueggPcpaMiembroComisionController.list); 
-router.get('/listMiembrosComision/:id',              ueggPcpaMiembroComisionController.listMiembrosComision);   
+router.get('/ueggPcpaConstruccion',                  ueggPcpaConstruccionController.list);
 router.get('/ueggPcpaConstruccion/:id',              ueggPcpaConstruccionController.getByUnidadEducativa);                                                                       
+router.get('/ueggPcpaIndicadoresEjecucion',          ueggPcpaIndicadoresEjecucionController.list);                                                                        
+router.get('/ueggPcpaIndicadoresTipo',               ueggPcpaIndicadoresTipoController.list);    
+                                                                    
+router.get('/ueggPcpaMiembroComision',               ueggPcpaMiembroComisionController.list); 
+router.get('/ueggPcpaMiembroComisionList/:id',       ueggPcpaMiembroComisionController.listMiembrosComision);   
+
 
 
 router.get('/ueggPcpaMiembroTipo',                   ueggPcpaMiembroTipoController.list);                                                                        
 router.get('/ueggPcpaReporteEmbarazoTipo',           ueggPcpaReporteEmbarazoTipoController.list);                                                                        
-router.get('/ueggPcpaUnidadEducativa',                ueggPcpaUnidadEducativaController.list);                                                                        
+router.get('/ueggPcpaUnidadEducativa',               ueggPcpaUnidadEducativaController.list);                                                                        
 router.get('/ueggViolenciaAccionesTipo',             ueggViolenciaAccionesTipoController.list);                                                                        
 router.get('/ueggViolenciaAgresor',                  ueggViolenciaAgresorController.list);                                                                        
 router.get('/ueggViolenciaAutoFinalTipo',            ueggViolenciaAutoFinalTipoController.list);                                                                        
@@ -251,19 +260,22 @@ router.put('/ueggEmbInformeEmbarazo/:id',                ueggEmbInformeEmbarazoC
 router.put('/ueggEmbReporteEmbarazoTipo/:id',            ueggEmbReporteEmbarazoTipoController.update);                                                                        
 router.put('/ueggPcpaAcccionesEjecucion/:id',            ueggPcpaAcccionesEjecucionController.update);                                                                        
 router.put('/ueggPcpaActividadesEjecutadas/:id',         ueggPcpaActividadesEjecutadasController.update);                                                                        
-router.put('/ueggPcpaActividadesPromocion/:id',          ueggPcpaActividadesPromocionController.update);                                                                        
+router.put('/ueggPcpaActividadesPromocion/:id',          ueggPcpaActividadesPromocionController.update);   
+router.put('/ueggPcpaActividadesPromocionDel/:id',       ueggPcpaActividadesPromocionDelController.deleteLogico); 
+
 router.put('/ueggPcpaActividadesTipo/:id',               ueggPcpaActividadesTipoController.update);                                                                        
 router.put('/ueggPcpaActividadesTipoDet/:id',            ueggPcpaActividadesTipoDetController.update);                                                                        
 router.put('/ueggPcpaComisionTipo/:id',                  ueggPcpaComisionTipoController.update);                                                                        
 router.put('/ueggPcpaConstruccion/:id',                  ueggPcpaConstruccionController.update);                                                                        
 router.put('/ueggPcpaConstruccionDel/:id',               ueggPcpaConstruccionDelController.deleteLogico); 
-router.put('/ueggPcpaMiembroComisionDel/:id',            ueggPcpaMiembroComisionDelController.deleteLogico); 
-
 
 
 router.put('/ueggPcpaIndicadoresEjecucion/:id',          ueggPcpaIndicadoresEjecucionController.update);                                                                        
 router.put('/ueggPcpaIndicadoresTipo/:id',               ueggPcpaIndicadoresTipoController.update);                                                                        
-router.put('/ueggPcpaMiembroComision/:id',               ueggPcpaMiembroComisionController.update);                                                                        
+router.put('/ueggPcpaMiembroComision/:id',               ueggPcpaMiembroComisionController.update);  
+router.put('/ueggPcpaMiembroComisionDel/:id',            ueggPcpaMiembroComisionDelController.deleteLogico); 
+
+
 router.put('/ueggPcpaMiembroTipo/:id',                   ueggPcpaMiembroTipoController.update);                                                                        
 //router.put('/ueggPcpaReporteEmbarazoTipo/:id',           ueggPcpaReporteEmbarazoTipoController.update);                                                                        
 router.put('/ueggPcpaUnidadEducativa/:id',                ueggPcpaUnidadEducativaController.update);                                                                        

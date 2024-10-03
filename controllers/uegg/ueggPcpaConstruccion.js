@@ -29,35 +29,22 @@ module.exports = {
     add(req, res) {
         return UeggPcpaConstruccion.create({
             id_pcpa_unidad_educativa: req.body.id_pcpa_unidad_educativa ,
-
-            fecha_registro: req.body.fecha_registro   ,    
+            fecha_registro: new Date(req.body.fecha_registro )  , //  new Date().toISOString()     new Date( req.body.fecha_registro  ).toString() ,
             check_diagnostico_pcpa: req.body.check_diagnostico_pcpa ,
-            fecha_aprobacion: req.body.fecha_aprobacion, // new Date(   dateToString (req.body.fecha_aprobacion,'tz',''))  , //   new Date(  req.body.fecha_aprobacion.toLocaleDateString() )
+            fecha_aprobacion:   new Date(req.body.fecha_aprobacion ), //new Date( req.body.fecha_aprobacion).toString() , // new Date(   dateToString (req.body.fecha_aprobacion,'tz',''))  , //   new Date(  req.body.fecha_aprobacion.toLocaleDateString() )
             vigencia_aprobacion:  req.body.vigencia_aprobacion   ,
             estado: 'ACTIVO' ,
-            usu_cre: req.body.usu_cre ,
-            fec_cre: req.body.fec_cre 
+            usu_cre: req.body.usu_cre ,//   new Date('2013-03-10T02:00:00Z').toString()
+            fec_cre: req.body.fec_cre  //  new Date().toISOString() 
           
         })
           .then(ueggPcpaConstruccion => res.status(201).send(ueggPcpaConstruccion))
-          .catch(error => res.status(400).send(error));
+          .catch(error => {
+            console.log("error", error);
+            res.status(400).send(error)});
       },
-/*
-      dateToString (date, timeZone, dialect) {
-        if (moment.tz.zone(timeZone)) {
-          date = moment(date).tz(timeZone);
-        } else {
-          date = moment(date).utcOffset(timeZone);
-        }
-      
-        if (dialect === 'mysql' || dialect === 'mariadb') {
-          return date.format('YYYY-MM-DD HH:mm:ss');
-        } else {
-          // ZZ here means current timezone, _not_ UTC
-          return date.format('YYYY-MM-DD HH:mm:ss.SSS Z'); /// <-- Executed for MSSQL - includes offset
-        }
-      },
-    */
+
+
     update(req, res) {
         console.log(UeggPcpaConstruccion);
         return UeggPcpaConstruccion.findByPk(req.params.Id, {})

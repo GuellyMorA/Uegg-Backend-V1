@@ -1,4 +1,5 @@
 const UeggPcpaActividadesPromocion = require('../../models/uegg').uegg_pcpa_actividades_promocion ; 
+const sequelize = UeggPcpaActividadesPromocion.sequelize;
 
 module.exports = {                                                                                                                                                                                                                                                                                                                                                                                                                             
     list(req, res) {
@@ -7,6 +8,36 @@ module.exports = {
             .then((ueggPcpaActividadesPromocion) => res.status(200).send(ueggPcpaActividadesPromocion)) 
             .catch((error) => { res.status(400).send(error); });
     },
+
+    
+
+
+    async listActividadesPromocion(req, res) {
+      console.log('req', req.params);
+   
+      return sequelize.query(`
+      select upapU.id_actividades_promocion ,upapU.id_pcpa_construccion  , upapU.id_pcpa_actividades_tipo,upapU.nivel ,upapU.cod_actividad, upapU.desc_actividades_promocion, upapU.check_actividad_tipo, upapU.orden, upapU.estado 
+      from(      
+            select upap.id as id_actividades_promocion,upap.id_pcpa_construccion  , upat.id as id_pcpa_actividades_tipo, 1 as nivel ,upat.cod_actividad, upat.desc_actividad as desc_actividades_promocion, upat.check_actividad_tipo, upat.orden, upat.estado 
+            from uegg_pcpa_actividades_promocion upap  
+            join uegg_pcpa_actividades_tipo  upat  on upap.id_pcpa_actividades_tipo = upat.id    
+                where  upap.nivel =1  
+            union all
+            select  upap.id as id_actividades_promocion, upap.id_pcpa_construccion , upatd.id as id_pcpa_actividades_tipo ,  2 as nivel, upatd.cod_actividad, upatd.desc_actividad as desc_actividades_promocion, upatd.check_actividad_tipo_det, upatd.orden, upatd.estado 
+            from uegg_pcpa_actividades_promocion upap  
+            join uegg_pcpa_actividades_tipo_det  upatd  on upap.id_pcpa_actividades_tipo = upatd.id    
+                where  upap.nivel =2 
+       )  as upapU join uegg_pcpa_construccion upcon on upapU.id_pcpa_construccion = upcon.id  
+                   join uegg_pcpa_unidad_educativa upue   on upcon.id_pcpa_unidad_educativa = upue.id        
+             WHERE upue.cod_ue = ${req.params.id} and upue.estado = 'ACTIVO' order by upapU.id_actividades_promocion ASC,  upapU.nivel ASC`,
+        {
+          type: sequelize.QueryTypes.SELECT, plain: false, raw: true 
+        })
+          .then((subcentros) => res.status(200).send(subcentros))
+          .catch((error) => { res.status(400).send(error); });
+    },
+
+
 
     getById(req, res) {
         console.log(req.params.id); 
@@ -94,7 +125,38 @@ module.exports = {
               .catch(error => res.status(400).send(error));
           })
           .catch(error => res.status(400).send(error));
-      }
+      },
+
+
+      deleteLogico(req, res) { // en el front se llama    
+        console.log('id contruccion : req.params.id: ',req.params.id );
+     
+  
+        return UeggPcpaActividadesPromocion.findByPk(req.params.id, {})
+            .then(ueggPcpaActividadesPromocion => {
+              if (!ueggPcpaActividadesPromocion) {
+                return res.status(404).send({
+                  message: "ueggPcpaActividadesPromocion Not Found"
+                });
+              }
+              return ueggPcpaActividadesPromocion
+                .update({
+                 
+                  estado: 'INACTIVO',  
+                  usu_mod: 'ADMIN', //req.body.usu_mod ,
+                  fec_mod:  new Date() //req.body.fec_mod
+                })
+                .then(() =>{  
+                   console.log(' *************SI INACTIVADO OK');
+                   res.status(204).send(ueggPcpaActividadesPromocion)   })
+                .catch(error => {
+                  console.log(' *************ERROR INACTIVADO 1', error);
+                  res.status(400).send(error)  });
+            })
+            .catch(error => {
+              console.log(' *************ERROR INACTIVADO 2',  error);
+              res.status(400).send(error)  });
+      },   
 
 
 

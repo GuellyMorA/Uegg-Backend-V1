@@ -12,10 +12,10 @@ module.exports = {
 
     async listMiembrosComision(req, res) {
       console.log('req', req.params);
-      let ie_tipo = null; //await GeneralService.getInstitucioneducativaTipo();
+   
       return sequelize.query(`select  upue.id as id_pcpa_unidad_educativa,  upue.cod_sie,upue.desc_ue, upue.desc_municipio , 
       upue.desc_municipio  , upue.desc_nivel , upue.modalidad  , upue.nombres_director ||'-'|| upue.apellidos_director as nombres_director
-      , upcon.id, upcon.fecha_registro  , upcon.check_diagnostico_pcpa 
+      , upcon.id, upcon.fecha_registro  , upcon.check_diagnostico_pcpa , upcon.fecha_aprobacion, upcon.vigencia_aprobacion
       , upct.id as id_comision_tipo, upct.desc_comision_tipo 
       , upmt.id as id_miembro_tipo, upmt.desc_miembro_tipo
       , upmc.id as id_miembro, upmc.nombres_miembro as nombres_miembro
