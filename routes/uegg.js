@@ -118,9 +118,6 @@ router.get('/ueggPcpaConstruccion',                  ueggPcpaConstruccionControl
 router.get('/ueggPcpaConstruccion/:id',              ueggPcpaConstruccionController.getByUnidadEducativa);                                                                       
 router.get('/ueggPcpaIndicadoresEjecucion',          ueggPcpaIndicadoresEjecucionController.list);                                                                        
 router.get('/ueggPcpaIndicadoresTipo',               ueggPcpaIndicadoresTipoController.list);    
-                                                                    
-router.get('/ueggPcpaMiembroComision',               ueggPcpaMiembroComisionController.list); 
-router.get('/ueggPcpaMiembroComisionList/:id',       ueggPcpaMiembroComisionController.listMiembrosComision);   
 
 
 
@@ -226,7 +223,12 @@ router.get('/ueggPcpaComisionTipo/:id',                  ueggPcpaComisionTipoCon
 router.get('/ueggPcpaConstruccion/:id',                  ueggPcpaConstruccionController.getById);                                                                        
 router.get('/ueggPcpaIndicadoresEjecucion/:id',          ueggPcpaIndicadoresEjecucionController.getById);                                                                        
 router.get('/ueggPcpaIndicadoresTipo/:id',               ueggPcpaIndicadoresTipoController.getById);                                                                        
-router.get('/ueggPcpaMiembroComision/:id',               ueggPcpaMiembroComisionController.getById);                                                                        
+router.get('/ueggPcpaMiembroComision/:id',               ueggPcpaMiembroComisionController.getById);    
+                                                                    
+router.get('/ueggPcpaMiembroComision',               ueggPcpaMiembroComisionController.list); 
+router.get('/ueggPcpaMiembroComisionList/:id',       ueggPcpaMiembroComisionController.listMiembrosComision);   
+
+
 router.get('/ueggPcpaMiembroTipo/:id',                   ueggPcpaMiembroTipoController.getById);                                                                        
 router.get('/ueggPcpaReporteEmbarazoTipo/:id',           ueggPcpaReporteEmbarazoTipoController.getById);                                                                        
 router.get('/ueggPcpaUnidadEducativa/:id',                ueggPcpaUnidadEducativaController.getById);                                                                        

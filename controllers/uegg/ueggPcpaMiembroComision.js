@@ -1,7 +1,8 @@
 const UeggPcpaMiembroComision = require('../../models/uegg').uegg_pcpa_miembro_comision ; 
 const sequelize = UeggPcpaMiembroComision.sequelize;
 
-module.exports = {                                                                                                                                                                                                                                                                                                                                                                                                                             
+module.exports = {   
+                                                                                                                                                                                                                                                                                                                                                                                                                            
     list(req, res) {
         return UeggPcpaMiembroComision
             .findAll({})

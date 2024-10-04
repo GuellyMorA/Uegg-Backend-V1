@@ -18,12 +18,12 @@ module.exports = {
       return sequelize.query(`
       select upapU.id_actividades_promocion ,upapU.id_pcpa_construccion  , upapU.id_pcpa_actividades_tipo,upapU.nivel ,upapU.cod_actividad, upapU.desc_actividades_promocion, upapU.check_actividad_tipo, upapU.orden, upapU.estado 
       from(      
-            select upap.id as id_actividades_promocion,upap.id_pcpa_construccion  , upat.id as id_pcpa_actividades_tipo, 1 as nivel ,upat.cod_actividad, upat.desc_actividad as desc_actividades_promocion, upat.check_actividad_tipo, upat.orden, upat.estado 
+            select upap.id as id_actividades_promocion,upap.id_pcpa_construccion  , upat.id as id_pcpa_actividades_tipo, 1 as nivel ,upat.cod_actividad, upat.desc_actividad as desc_actividades_promocion, upat.check_actividad_tipo, upat.orden, upap.estado 
             from uegg_pcpa_actividades_promocion upap  
             join uegg_pcpa_actividades_tipo  upat  on upap.id_pcpa_actividades_tipo = upat.id    
                 where  upap.nivel =1  
             union all
-            select  upap.id as id_actividades_promocion, upap.id_pcpa_construccion , upatd.id as id_pcpa_actividades_tipo ,  2 as nivel, upatd.cod_actividad, upatd.desc_actividad as desc_actividades_promocion, upatd.check_actividad_tipo_det, upatd.orden, upatd.estado 
+            select  upap.id as id_actividades_promocion, upap.id_pcpa_construccion , upatd.id as id_pcpa_actividades_tipo ,  2 as nivel, upatd.cod_actividad, upatd.desc_actividad as desc_actividades_promocion, upatd.check_actividad_tipo_det, upatd.orden, upap.estado 
             from uegg_pcpa_actividades_promocion upap  
             join uegg_pcpa_actividades_tipo_det  upatd  on upap.id_pcpa_actividades_tipo = upatd.id    
                 where  upap.nivel =2 
