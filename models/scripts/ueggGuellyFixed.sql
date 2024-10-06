@@ -1567,3 +1567,10 @@ ALTER TABLE public.uegg_violencia_caso_agresor ALTER COLUMN num_caso SET NOT NUL
 
 ALTER TABLE public.uegg_violencia_caso_com ADD id_violencia_victima int4 NULL;
 ALTER TABLE public.uegg_violencia_caso_com ADD id_violencia_agresor int4 NULL;
+
+
+INSERT INTO public.uegg_pcpa_actividades_tipo (id, cod_actividad, desc_actividad, check_actividad_tipo, orden, estado, usu_cre, usu_mod, fec_cre, fec_mod) VALUES(11, 'MCI', 'MEDIOS DE COMUNICACIÓN INTERNA', NULL, 12, 'ACTIVO', 'ADMIN', NULL, '2024-05-07', NULL);
+INSERT INTO public.uegg_pcpa_actividades_tipo (id, cod_actividad, desc_actividad, check_actividad_tipo, orden, estado, usu_cre, usu_mod, fec_cre, fec_mod) VALUES(12, 'RS', 'REDES SOCIALES  ', NULL, 13, 'ACTIVO', 'ADMIN', NULL, '2024-05-07', NULL);
+INSERT INTO public.uegg_pcpa_actividades_tipo (id, cod_actividad, desc_actividad, check_actividad_tipo, orden, estado, usu_cre, usu_mod, fec_cre, fec_mod) VALUES(13, 'TAL', 'TALLERES', NULL, 14, 'ACTIVO', 'ADMIN', NULL, '2024-05-07', NULL);
+INSERT INTO public.uegg_pcpa_actividades_tipo (id, cod_actividad, desc_actividad, check_actividad_tipo, orden, estado, usu_cre, usu_mod, fec_cre, fec_mod) VALUES(14, 'FER', 'FERIAS', NULL, 15, 'ACTIVO', 'ADMIN', NULL, '2024-05-07', NULL);
+INSERT INTO public.uegg_pcpa_actividades_tipo (id, cod_actividad, desc_actividad, check_actividad_tipo, orden, estado, usu_cre, usu_mod, fec_cre, fec_mod) VALUES(15, 'OTR', 'OTROS', NULL, 16, 'ACTIVO', 'ADMIN', NULL, '2024-05-07', NULL);S

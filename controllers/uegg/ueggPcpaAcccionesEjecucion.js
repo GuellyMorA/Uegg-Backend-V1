@@ -84,22 +84,38 @@ module.exports = {
               .catch(error => res.status(400).send(error));
           })
           .catch(error => res.status(400).send(error));
-      }
+      },
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+      deleteLogico(req, res) { // en el front se llama    
+        console.log('id contruccion : req.params.id: ',req.params.id );
+     
+  
+        return UeggPcpaAccionesEjecucion.findByPk(req.params.id, {})
+            .then(ueggPcpaAccionesEjecucion => {
+              if (!ueggPcpaAccionesEjecucion) {
+                return res.status(404).send({
+                  message: "ueggPcpaAccionesEjecucion Not Found"
+                });
+              }
+              return ueggPcpaAccionesEjecucion
+                .update({
+                 
+                  estado: 'INACTIVO',  
+                  usu_mod: 'ADMIN', //req.body.usu_mod ,
+                  fec_mod:  new Date() //req.body.fec_mod
+                })
+                .then(() =>{  
+                   console.log(' *************SI INACTIVADO OK');
+                   res.status(204).send(ueggPcpaAccionesEjecucion)   })
+                .catch(error => {
+                  console.log(' *************ERROR INACTIVADO 1', error);
+                  res.status(400).send(error)  });
+            })
+            .catch(error => {
+              console.log(' *************ERROR INACTIVADO 2',  error);
+              res.status(400).send(error)  });
+      },   
 
 
 
